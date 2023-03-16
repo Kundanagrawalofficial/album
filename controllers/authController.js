@@ -100,4 +100,8 @@ export const registerController = async (req, res) => {
       });
     }
   };
+  //test controller
+  export const testController =(req,res)=>{
+    res.send("PRoected route")
+  }
   

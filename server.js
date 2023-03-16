@@ -4,13 +4,15 @@ import dotenv from "dotenv"
 import morgan from "morgan"
 import conncetDB from './config/db.js';
 import authRoutes from "./routes/authRoute.js"
+import cors from "cors"
 //configure env
 dotenv.config();
 //database config
 conncetDB()
 const app=express()
 
-//middle ware
+//middle ware4
+app.use(cors())
 app.use(express.json())
 app.use(morgan('dev'))
 //routes

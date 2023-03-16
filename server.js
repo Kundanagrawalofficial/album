@@ -18,9 +18,9 @@ app.use('/api/v1/auth',authRoutes)
 //rest api
 app.get('/',(req,res)=>{
     res.send("<h1>Welcome to amazing</h1>")
-})
+});
 //Port
 const PORT=process.env.PORT||8080;
 app.listen(PORT,()=>{
     console.log(`Server is running on ${PORT}`.bgCyan.white)
-})
+});

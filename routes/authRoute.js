@@ -1,7 +1,7 @@
 import express from "express"
 import {registerController} from "../controllers/authController.js"
 //route object
-const router =express.Router()
+const router = express.Router()
 
 //routuing
 //register

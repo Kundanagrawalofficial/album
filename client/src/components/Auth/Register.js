@@ -10,12 +10,13 @@ const Register = () => {
     const [password,setPassword]=useState("")
     const [phone,setPhone]=useState("")
     const [address,setAddress]=useState("")
+    const[Question,setQuestion]=useState("")
     const navigate=useNavigate()
 
     const handleSubmit=async(e)=>{
      e.preventDefault()
     try {
-        const res=await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`,{name,email,password,phone,address})
+        const res=await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`,{name,email,password,phone,address,Question})
         if(res && res.data.success){
         toast.success(res.data && res.data.message)
         navigate('/login')
@@ -26,6 +27,7 @@ const Register = () => {
      catch (error) {
         console.log(error)
         toast.error("Something went Wrong")
+        
         
     }
     }
@@ -54,7 +56,11 @@ const Register = () => {
     
     <input value={address}  onChange ={(e)=>setAddress(e.target.value)} type="text" className="form-control" id="exampleInputEmail1" placeholder='Enter Your Address' required/>
   </div>
-  <button type="submit" className="btn btn-primary">Submit</button>
+  <div className="mb-3">
+    
+    <input value={Question}  onChange ={(e)=>setQuestion(e.target.value)} type="text" className="form-control" id="exampleInputEmail1" placeholder='Enter Your Favorite Sports' required/>
+  </div>
+  <button type="submit" className="btn btn-primary">REGISTER</button>
 </form>
 
         </div>

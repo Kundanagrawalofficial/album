@@ -93,6 +93,8 @@ export const registerController = async (req, res) => {
           name: user.name,
           email: user.email,
           phone: user.phone,
+          address:user.address,
+          role:user.role
         },
         token,
       });

@@ -4,7 +4,7 @@ import AdminMenu from "./../../components/Layout/AdminMenu";
 import  toast from 'react-hot-toast';
 import axios from "axios"
 const CreateCategory = () => {
-  const [categories,setCategories]=useState()
+  const [categories,setCategories]=useState([])
   //get all cat
   const getAllcategory =async()=>{
     try {

@@ -39,16 +39,16 @@ const CreateCategory = () => {
     </tr>
   </thead>
   <tbody>
-    <tr>
       {categories.map((c) =>(
         <>
+          <tr>
          <td key={c.id}>{c.name}</td>
-        <td><button className="btn btn-primary">Edit</button>
-        </td>
-        </>
+          <td>
+         <button className="btn btn-primary">Edit</button>
+         </td>
+         </tr>
+         </>
       ))}
-      
-    </tr>
   </tbody>
 </table>
 

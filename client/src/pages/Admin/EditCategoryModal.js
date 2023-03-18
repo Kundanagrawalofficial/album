@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Modal } from 'antd';
-import CategoryForm from './CategoryForm';
+// import { Modal } from 'antd';
+import CategoryForm from './../compon';
 
 const EditCategoryModal = ({ category, visible, handleOk, handleCancel }) => {
   const [updatedName, setUpdatedName] = useState('');
@@ -11,18 +11,12 @@ const EditCategoryModal = ({ category, visible, handleOk, handleCancel }) => {
   };
 
   return (
-    <Modal
-      title={`Update Category - ${category.name}`}
-      visible={visible}
-      onCancel={handleCancel}
-      footer={null}
-    >
+   
       <CategoryForm
         value={updatedName}
         setValue={setUpdatedName}
         handleSubmit={handleUpdate}
       />
-    </Modal>
   );
 };
 

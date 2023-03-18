@@ -4,7 +4,6 @@ import AdminMenu from "./../../components/Layout/AdminMenu";
 import toast from "react-hot-toast";
 import axios from "axios";
 import CategoryForm from "../../components/Form/CategoryForm";
-import { Modal } from "antd";
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
@@ -139,14 +138,12 @@ const CreateCategory = () => {
                   ))}
                 </tbody>
               </table>
-            </div>
-           
+            </div>           
               <CategoryForm
                 value={updatedName}
                 setValue={setUpdatedName}
                 handleSubmit={handleUpdate}
               />
-            
           </div>
         </div>
       </div>

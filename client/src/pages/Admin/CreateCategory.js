@@ -4,24 +4,24 @@ import AdminMenu from "./../../components/Layout/AdminMenu";
 import  toast from 'react-hot-toast';
 import axios from "axios"
 const CreateCategory = () => {
-  const [categories,setCategories]=useState([])
+  const [categories,setCategories]= useState([]);
   //get all cat
-  const getAllcategory =async()=>{
+  const getAllcategory =async () =>{
     try {
-      const {data}= await axios.get('/api/v1/category/get-category')
+      const { data}= await axios.get('/api/v1/category/get-category');
       if(data.success){
         setCategories(data.category);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error('Something went Wrong in getting category')
       
     }
-  }
+  };
   useEffect(()=>{
    getAllcategory();
 
-  },[])
+  },[]);
   return (
     <Layout title={"Dashboard - Create Category"}>
       <div className="container-fluid m-3 p-3">
@@ -41,9 +41,9 @@ const CreateCategory = () => {
   </thead>
   <tbody>
     <tr>
-      {categories.map(c =>{
+      {categories.map((c) =>(
         <td key={c._id}>{c.name}</td>
-      })}
+      ))}
       
     </tr>
   </tbody>

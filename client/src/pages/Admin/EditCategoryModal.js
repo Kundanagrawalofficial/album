@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import { Modal } from 'antd';
-import CategoryForm from './../compon';
+import CategoryForm from './../component/CategoryForm';
 
 const EditCategoryModal = ({ category, visible, handleOk, handleCancel }) => {
   const [updatedName, setUpdatedName] = useState('');

@@ -1,21 +1,24 @@
-import React from 'react'
-import Layout from '../../components/Layout/Layout'
-import AdminMenu from './../../components/Layout/AdminMenu';
+import React from 'react';
+import Layout from '../../components/Layout/Layout';
+import AdminMenu from '../../components/Layout/AdminMenu';
 
 const CreateProduct = () => {
   return (
-    <Layout title={'Dashboard - Create Product'}>
-        <div className='container-fluid m-3 p-3'>
+    <Layout title={'Create Product'}>
+      <div className='container-fluid m-3 p-3'>
         <div className='row'>
-        <div className='col-md-3'></div>
-        <AdminMenu/>
-        <div className='col-md-9'>
-        <h1>Create Product</h1>
+          <div className='col-md-3'>
+            <AdminMenu />
+          </div>
+          <div className='col-md-9'>
+            <h1>Create Product</h1>
+            <p>Use this page to create a new product to sell in your store.</p>
+            {/* Add form or input fields for creating a new product */}
+          </div>
         </div>
-        </div>
-        </div>
-        </Layout>
+      </div>
+    </Layout>
   )
 }
 
-export default CreateProduct
+export default CreateProduct;

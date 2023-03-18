@@ -1,8 +1,17 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import Layout from '../../components/Layout/Layout';
 import AdminMenu from '../../components/Layout/AdminMenu';
 
 const CreateProduct = () => {
+  const [categories,setCategories]=useState()
+  //get all cat
+  const getAllcategory =async()=>{
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
   return (
     <Layout title={'Create Product'}>
       <div className='container-fluid m-3 p-3'>

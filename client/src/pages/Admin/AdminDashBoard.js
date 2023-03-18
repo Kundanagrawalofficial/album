@@ -15,7 +15,7 @@ const AdminDashBoard = () => {
                     <div className='card w-75 p-3'>
                         <h3>Admin Name:{auth?.user.name}</h3>
                         <h3>Admin E-mail:{auth?.user.email}</h3>
-                        <h3>Admin Contact:{auth?.user.contact}</h3>
+                        <h3>Admin Contact:{auth?.user.phone}</h3>
                     </div>
                 </div>
             </div>

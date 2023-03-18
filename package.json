@@ -15,6 +15,7 @@
   "license": "KIT",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "bootstrap-icons": "^1.10.3",
     "colors": "^1.4.0",
     "concurrently": "^7.6.0",
     "cors": "^2.8.5",

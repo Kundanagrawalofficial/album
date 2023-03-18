@@ -41,7 +41,7 @@ const CreateCategory = () => {
   <tbody>
     <tr>
       {categories.map((c) =>(
-        <td key={c._id}>{c.name}</td>
+        <td key={c.id}>{c.name}</td>
       ))}
       
     </tr>

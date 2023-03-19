@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 import { useState } from 'react';
+=======
+import React, { useState } from 'react';
+// import { Modal } from 'antd';
+import CategoryForm from './../components/Form/CategoryForm';
+>>>>>>> 1e44ada6cf462e8fc985fa23c6a90023f858453a
 
 const EditCategoryForm = ({ category, onSubmit }) => {
   const [name, setName] = useState(category ? category.name : '');
@@ -13,6 +19,7 @@ const EditCategoryForm = ({ category, onSubmit }) => {
   };
 
   return (
+<<<<<<< HEAD
     <form onSubmit={handleSubmit}>
       <label htmlFor="category-name">Category Name:</label>
       <input
@@ -23,6 +30,14 @@ const EditCategoryForm = ({ category, onSubmit }) => {
       />
       <button type="submit">Save Changes</button>
     </form>
+=======
+   
+      <CategoryForm
+        value={updatedName}
+        setValue={setUpdatedName}
+        handleSubmit={handleUpdate}
+      />
+>>>>>>> 1e44ada6cf462e8fc985fa23c6a90023f858453a
   );
 };
 

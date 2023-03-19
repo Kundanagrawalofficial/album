@@ -2,16 +2,22 @@ import React, { useState, useEffect } from "react";
 import Layout from "./../components/Layout/Layout";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { Prices } from "../components/Prices";
+import { useCart } from "../context/Cart";
+import toast from "react-hot-toast";
+
 const ProductDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState({});
+  const [cart, setCart] = useCart();
   const [relatedProducts, setRelatedProducts] = useState([]);
 
-  //initalp details
+  //initial details
   useEffect(() => {
     if (params?.slug) getProduct();
   }, [params?.slug]);
+
   //getProduct
   const getProduct = async () => {
     try {
@@ -24,6 +30,7 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
+
   //get similar product
   const getSimilarProduct = async (pid, cid) => {
     try {
@@ -35,6 +42,7 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
+
   return (
     <Layout>
       <div className="row container mt-2">
@@ -53,10 +61,23 @@ const ProductDetails = () => {
           <h6>Description : {product.description}</h6>
           <h6>Price : {product.price}</h6>
           <h6>Category : {product?.category?.name}</h6>
-          <button class="btn btn-secondary ms-1">ADD TO CART</button>
+          <button
+            className="btn btn-secondary ms-1"
+            onClick={() => {
+              setCart([...cart, product]);
+              localStorage.setItem(
+                "cart",
+                JSON.stringify([...cart, product])
+              );
+              toast.success("Item Added To Cart");
+            }}
+          >
+            ADD TO CART
+          </button>
         </div>
       </div>
       <hr />
+      
       <div className="row container">
         <h6>Similar Products</h6>
         {relatedProducts.length < 1 && (
@@ -80,7 +101,13 @@ const ProductDetails = () => {
                 >
                   More Details
                 </button>
-                <button class="btn btn-secondary ms-1">ADD TO CART</button>
+                <button className="btn btn-secondary ms-1" onClick={()=>{
+                    setCart([...cart,p]);
+                    localStorage.setItem('cart',JSON.stringify([...cart,p]))
+                    toast.success("Item Added To Cart")
+                  }}>
+                    ADD TO CART
+                  </button>
               </div>
             </div>
           ))}

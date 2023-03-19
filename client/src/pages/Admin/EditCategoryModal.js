@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
-import { Modal } from 'antd';
-import CategoryForm from './CategoryForm';
+import { useState } from 'react';
 
-const EditCategoryModal = ({ category, visible, handleOk, handleCancel }) => {
-  const [updatedName, setUpdatedName] = useState('');
+const EditCategoryForm = ({ category, onSubmit }) => {
+  const [name, setName] = useState(category ? category.name : '');
 
-  const handleUpdate = () => {
-    // Handle category update logic here
-    handleOk(updatedName);
+  const handleNameChange = e => {
+    setName(e.target.value);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    onSubmit(name);
   };
 
   return (
-    <Modal
-      title={`Update Category - ${category.name}`}
-      visible={visible}
-      onCancel={handleCancel}
-      footer={null}
-    >
-      <CategoryForm
-        value={updatedName}
-        setValue={setUpdatedName}
-        handleSubmit={handleUpdate}
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="category-name">Category Name:</label>
+      <input
+        id="category-name"
+        type="text"
+        value={name}
+        onChange={handleNameChange}
       />
-    </Modal>
+      <button type="submit">Save Changes</button>
+    </form>
   );
 };
 
-export default EditCategoryModal;
+export default EditCategoryForm;

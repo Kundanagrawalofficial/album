@@ -1,0 +1,264 @@
+import React from "react";
+import Layout from "./../components/Layout/Layout";
+import { useCart } from "../context/Cart";
+import { useAuth } from "../context/auth";
+import { useNavigate } from "react-router-dom";
+import CashfreeSDK from "cashfree-sdk";
+
+const CartPage = () => {
+  const [auth, setAuth] = useAuth();
+  const [cart, setCart] = useCart();
+  const navigate = useNavigate();
+
+  //total price
+  const totalPrice = () => {
+    try {
+      let total = 0;
+      cart?.map((item) => {
+        total = total + item.price;
+      });
+      return total;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //delete item
+  const removeCartItem = (pid) => {
+    try {
+      let myCart = [...cart];
+      let index = myCart.findIndex((item) => item._id === pid);
+      myCart.splice(index, 1);
+      setCart(myCart);
+      localStorage.setItem("cart", JSON.stringify(myCart));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // handle payment
+  const handlePayment = () => {
+    try {
+      // create Cashfree instance
+      const cashfree = new CashfreeSDK({
+        env: "TEST",
+        appId: "YOUR_APP_ID",
+        secretKey: "YOUR_SECRET_KEY",
+      });
+
+      // prepare payment data
+      const orderId = `ORD_${Date.now()}`;
+      const orderAmount = totalPrice();
+      const customerName = auth?.user?.name;
+      const customerEmail = auth?.user?.email;
+
+      // initiate payment
+      cashfree.Payment.initPayment({
+        orderId: orderId,
+        orderAmount: orderAmount,
+        customerName: customerName,
+        customerEmail: customerEmail,
+        notifyUrl: "YOUR_NOTIFY_URL",
+        paymentModes: "",
+      })
+        .then((result) => {
+          // redirect user to payment page
+          cashfree.Payment.loadPaymentPage(result.paymentLink);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <Layout>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="text-center bg-light p-2 mb-1">
+              {`Hello ${auth?.token && auth?.user?.name}`}
+            </h1>
+            <h4 className="text-center">
+              {cart?.length
+                ? `You
+return (
+  <Layout>
+    <div className="container">
+      <div className="row">
+        <div className="col-md-12">
+          <h1 className="text-center bg-light p-2 mb-1">
+            {`Hello ${auth?.token && auth?.user?.name}`}
+          </h1>
+          <h4 className="text-center">
+            {cart?.length
+              ? `You Have ${cart.length} items in your cart ${
+                  auth?.token ? "" : "please login to checkout"
+                }`
+              : " Your Cart Is Empty"}
+          </h4>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-8">
+          {cart?.map((p) => (
+            <div className="row mb-2 p-3 card flex-row">
+              <div className="col-md-4">
+                <img
+                  src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
+                  className="card-img-top"
+                  alt={p.name}
+                  width="100px"
+                  height={"100px"}
+                />
+              </div>
+              <div className="col-md-8">
+                <p>{p.name}</p>
+                <p>{p.description.substring(0, 30)}</p>
+                <p>Price : {p.price}</p>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => removeCartItem(p._id)}
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="col-md-4 text-center">
+          <h2>Cart Summary</h2>
+          <p>Total | Checkout | Payment</p>
+          <hr />
+          <h4>Total : {totalPrice()} </h4>
+          {auth?.user?.address ? (
+            <>
+              <div className="mb-3">
+                <h4>Current Address</h4>
+                <h5>{auth?.user?.address}</h5>
+                <button
+                  className="btn btn-outline-warning"
+                  onClick={() => navigate("/dashboard/user/profile")}
+                >
+                  Update Address
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className="mb-3">
+              {auth?.token ? (
+                <button
+                  className="btn btn-outline-warning"
+                  onClick={() => navigate("/dashboard/user/profile")}
+                >
+                  Update Address
+                </button>
+              ) : (
+                <button
+                  className="btn btn-outline-warning"
+                  onClick={() =>
+                    navigate("/login", {
+                      state: "/cart",
+                    })
+                  }
+                >
+                  Plase Login to checkout
+                </button>
+              )}
+            </div>
+          )}
+          {cart?.length ? (
+            <button className="btn btn-primary" onClick={handlePayment}>
+              Pay Now
+            </button>
+          ) : (
+            ""
+          )}
+        </div>
+      </div>
+    </div>
+  </Layout>
+);
+<Route path="/payment-response" component={PaymentResponsePage} />
+
+import { useHistory } from "react-router-dom";
+
+const CartPage = () => {
+  // ...
+  const history = useHistory();
+
+  const handleCheckout = async () => {
+    try {
+      const response = await fetch("/api/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth?.token}`,
+        },
+        body: JSON.stringify(cart),
+      });
+      const data = await response.json();
+      const { order_id, order_amount, customer_email, customer_phone } = data;
+      const options = {
+        key: "your-key-here",
+        amount: order_amount,
+        currency: "INR",
+        name: "Your Website Name",
+        description: "Order Description",
+        image: "https://yourwebsite.com/logo.png",
+        order_id: order_id,
+        prefill: {
+          email: customer_email,
+          contact: customer_phone,
+        },
+        handler: function (response) {
+          // handle payment success
+          history.push("/payment-response", { paymentResponse: response });
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  // ...
+
+  return (
+    // ...
+    <div className="col-md-4 text-center">
+      <h2>Cart Summary</h2>
+      <p>Total | Checkout | Payment</p>
+      <hr />
+      <h4>Total : {totalPrice()} </h4>
+      {auth?.user?.address ? (
+        <>
+          <div className="mb-3">
+            <h4>Current Address</h4>
+            <h5>{auth?.user?.address}</h5>
+            <button
+              className="btn btn-primary"
+              onClick={handleCheckout}
+            >
+              Checkout
+            </button>
+          </div>
+        </>
+      ) : (
+        // ...
+      )}
+    </div>
+    // ...
+  );
+};
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+const PaymentResponsePage = () => {
+  const location
